@@ -8,10 +8,76 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String     @id @default(cuid())
+  email        String     @unique
   name         String?
   passwordHash String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  entries      UserBook[]
+  reviews      Review[]
+}
+
+model Book {
+  id          String     @id @default(cuid())
+  isbn13      String?    @unique
+  isbn10      String?
+  title       String
+  subtitle    String?
+  authors     String[]
+  publisher   String?
+  publishedAt Int?
+  pages       Int?
+  language    String?
+  coverUrl    String?
+  description String?
+  source      String?
+  createdAt   DateTime   @default(now())
+
+  entries     UserBook[]
+  reviews     Review[]
+
+  @@index([title])
+  @@index([authors])
+}
+
+model UserBook {
+  id         String     @id @default(cuid())
+  userId     String
+  bookId     String
+  status     BookStatus @default(WANT_TO_READ)
+  startedAt  DateTime?
+  finishedAt DateTime?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book       Book       @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId])
+  @@index([userId, status])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  bookId    String
+  rating    Float
+  text      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId])
+  @@index([bookId])
+}
+
+enum BookStatus {
+  WANT_TO_READ
+  READING
+  READ
+  ABANDONED
 }
