@@ -20,8 +20,8 @@ model User {
 }
 
 model Book {
-  id          String     @id @default(cuid())
-  isbn13      String?    @unique
+  id          String      @id @default(cuid())
+  isbn13      String?     @unique
   isbn10      String?
   title       String
   subtitle    String?
@@ -33,13 +33,34 @@ model Book {
   coverUrl    String?
   description String?
   source      String?
-  createdAt   DateTime   @default(now())
+  createdAt   DateTime    @default(now())
 
   entries     UserBook[]
   reviews     Review[]
+  genres      BookGenre[]
 
   @@index([title])
   @@index([authors])
+}
+
+model Genre {
+  id        String      @id @default(cuid())
+  slug      String      @unique
+  name      String      @unique
+  createdAt DateTime    @default(now())
+
+  books     BookGenre[]
+}
+
+model BookGenre {
+  bookId  String
+  genreId String
+
+  book    Book  @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  genre   Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@id([bookId, genreId])
+  @@index([genreId])
 }
 
 model UserBook {
