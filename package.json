@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "eslint",
+  "import-catalog": "tsx prisma/import-catalog.ts"
+},
   "dependencies": {
     "@prisma/client": "^6.19.3",
     "bcryptjs": "^3.0.3",
@@ -38,4 +39,5 @@
     "prisma@6.19.3": true,
     "@prisma/client@6.19.3": true
   }
+  
 }

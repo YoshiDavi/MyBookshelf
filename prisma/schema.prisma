@@ -23,6 +23,7 @@ model Book {
   id          String      @id @default(cuid())
   isbn13      String?     @unique
   isbn10      String?
+  olid        String?     @unique   // ← ADICIONAR
   title       String
   subtitle    String?
   authors     String[]
