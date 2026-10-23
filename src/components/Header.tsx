@@ -38,6 +38,12 @@ export function Header() {
           ) : user ? (
             <>
               <Link
+                href="/adicionar"
+                className="text-fg-muted transition-colors hover:text-fg"
+              >
+                Adicionar
+              </Link>
+              <Link
                 href="/perfil"
                 className="text-fg-muted transition-colors hover:text-fg"
               >

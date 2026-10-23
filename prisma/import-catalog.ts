@@ -1,8 +1,7 @@
 ﻿import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-
-const TARGET_TOTAL = 2000;
+const TARGET_TOTAL = 4000;
 const PER_PAGE = 100;
 const MAX_PAGES_PER_GENRE = 15;
 const SLEEP_MS = 1000;
